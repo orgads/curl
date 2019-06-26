@@ -2338,6 +2338,7 @@
     <ClCompile Include="..\..\..\..\lib\curl_endian.c" />
     <ClCompile Include="..\..\..\..\lib\curl_fnmatch.c" />
     <ClCompile Include="..\..\..\..\lib\curl_gethostname.c" />
+    <ClCompile Include="..\..\..\..\lib\curl_get_line.c" />
     <ClCompile Include="..\..\..\..\lib\curl_gssapi.c" />
     <ClCompile Include="..\..\..\..\lib\curl_memrchr.c" />
     <ClCompile Include="..\..\..\..\lib\curl_multibyte.c" />
@@ -2397,7 +2398,6 @@
     <ClCompile Include="..\..\..\..\lib\openldap.c" />
     <ClCompile Include="..\..\..\..\lib\parsedate.c" />
     <ClCompile Include="..\..\..\..\lib\pingpong.c" />
-    <ClCompile Include="..\..\..\..\lib\pipeline.c" />
     <ClCompile Include="..\..\..\..\lib\pop3.c" />
     <ClCompile Include="..\..\..\..\lib\progress.c" />
     <ClCompile Include="..\..\..\..\lib\psl.c" />
@@ -2478,6 +2478,7 @@
     <ClInclude Include="..\..\..\..\lib\curl_endian.h" />
     <ClInclude Include="..\..\..\..\lib\curl_fnmatch.h" />
     <ClInclude Include="..\..\..\..\lib\curl_gethostname.h" />
+    <ClInclude Include="..\..\..\..\lib\curl_get_line.h" />
     <ClInclude Include="..\..\..\..\lib\curl_gssapi.h" />
     <ClInclude Include="..\..\..\..\lib\curl_hmac.h" />
     <ClInclude Include="..\..\..\..\lib\curl_ldap.h" />
@@ -2536,7 +2537,6 @@
     <ClInclude Include="..\..\..\..\lib\nonblock.h" />
     <ClInclude Include="..\..\..\..\lib\parsedate.h" />
     <ClInclude Include="..\..\..\..\lib\pingpong.h" />
-    <ClInclude Include="..\..\..\..\lib\pipeline.h" />
     <ClInclude Include="..\..\..\..\lib\pop3.h" />
     <ClInclude Include="..\..\..\..\lib\progress.h" />
     <ClInclude Include="..\..\..\..\lib\psl.h" />
