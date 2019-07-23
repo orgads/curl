@@ -20,6 +20,9 @@
 /.vs
 /build/
 /builds/
+/projects/Windows
+/CHANGES
+/RELEASE-NOTES
 __pycache__
 CHANGES.dist
 Debug
