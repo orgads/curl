@@ -1,5 +1,5 @@
-#ifndef HEADER_CURL_POLARSSL_THREADLOCK_H
-#define HEADER_CURL_POLARSSL_THREADLOCK_H
+#ifndef HEADER_CURL_TOOL_PROGRESS_H
+#define HEADER_CURL_TOOL_PROGRESS_H
 /***************************************************************************
  *                                  _   _ ____  _
  *  Project                     ___| | | |  _ \| |
@@ -7,8 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 2013-2015, Daniel Stenberg, <daniel@haxx.se>, et al.
- * Copyright (C) 2010, Hoi-Ho Chan, <hoiho.chan@gmail.com>
+ * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -22,27 +21,19 @@
  * KIND, either express or implied.
  *
  ***************************************************************************/
-#include "curl_setup.h"
+#include "tool_setup.h"
 
-#if (defined USE_POLARSSL) || (defined USE_MBEDTLS)
+int xferinfo_cb(void *clientp,
+                curl_off_t dltotal,
+                curl_off_t dlnow,
+                curl_off_t ultotal,
+                curl_off_t ulnow);
 
-#if (defined(USE_THREADS_POSIX) && defined(HAVE_PTHREAD_H)) || \
-    (defined(USE_THREADS_WIN32) && defined(HAVE_PROCESS_H))
+bool progress_meter(struct GlobalConfig *global,
+                    struct timeval *start,
+                    bool final);
+void progress_finalize(struct per_transfer *per);
 
-int Curl_polarsslthreadlock_thread_setup(void);
-int Curl_polarsslthreadlock_thread_cleanup(void);
-int Curl_polarsslthreadlock_lock_function(int n);
-int Curl_polarsslthreadlock_unlock_function(int n);
+extern curl_off_t all_xfers;   /* total number */
 
-#else
-
-#define Curl_polarsslthreadlock_thread_setup() 1
-#define Curl_polarsslthreadlock_thread_cleanup() 1
-#define Curl_polarsslthreadlock_lock_function(x) 1
-#define Curl_polarsslthreadlock_unlock_function(x) 1
-
-#endif /* USE_THREADS_POSIX || USE_THREADS_WIN32 */
-
-#endif /* USE_POLARSSL */
-
-#endif /* HEADER_CURL_POLARSSL_THREADLOCK_H */
+#endif /* HEADER_CURL_TOOL_PROGRESS_H */

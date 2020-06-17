@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 2018 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 2018 - 2020, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -40,8 +40,7 @@ Curl_addrinfo *Curl_doh(struct connectdata *conn,
 CURLcode Curl_doh_is_resolved(struct connectdata *conn,
                               struct Curl_dns_entry **dns);
 
-int Curl_doh_getsock(struct connectdata *conn, curl_socket_t *socks,
-                     int numsocks);
+int Curl_doh_getsock(struct connectdata *conn, curl_socket_t *socks);
 
 typedef enum {
   DOH_OK,
@@ -56,14 +55,16 @@ typedef enum {
   DOH_DNS_UNEXPECTED_TYPE,  /* 9 */
   DOH_DNS_UNEXPECTED_CLASS, /* 10 */
   DOH_NO_CONTENT,           /* 11 */
-  DOH_DNS_BAD_ID            /* 12 */
+  DOH_DNS_BAD_ID,           /* 12 */
+  DOH_DNS_NAME_TOO_LONG     /* 13 */
 } DOHcode;
 
 typedef enum {
   DNS_TYPE_A = 1,
   DNS_TYPE_NS = 2,
   DNS_TYPE_CNAME = 5,
-  DNS_TYPE_AAAA = 28
+  DNS_TYPE_AAAA = 28,
+  DNS_TYPE_DNAME = 39           /* RFC6672 */
 } DNStype;
 
 #define DOH_MAX_ADDR 24
@@ -98,7 +99,7 @@ DOHcode doh_encode(const char *host,
                    unsigned char *dnsp, /* buffer */
                    size_t len,  /* buffer size */
                    size_t *olen); /* output length */
-DOHcode doh_decode(unsigned char *doh,
+DOHcode doh_decode(const unsigned char *doh,
                    size_t dohlen,
                    DNStype dnstype,
                    struct dohentry *d);

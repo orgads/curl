@@ -5,7 +5,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2020, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -1130,27 +1130,6 @@ curl_easy_setopt_ccsid(CURL *curl, CURLoption tag, ...)
   char *cp;
   unsigned int ccsid;
   curl_off_t pfsize;
-  static char testwarn = 1;
-
-  /* Warns if this procedure has not been updated when the dupstring enum
-     changes.
-     We (try to) do it only once: there is no need to issue several times
-     the same message; but since threadsafeness is not handled here,
-     this may occur (and we don't care!). */
-
-  if(testwarn) {
-    testwarn = 0;
-
-    if(
-#ifdef USE_ALTSVC
-       (int) STRING_LASTZEROTERMINATED != (int) STRING_ALTSVC + 1 ||
-#else
-       (int) STRING_LASTZEROTERMINATED != (int) STRING_DOH + 1 ||
-#endif
-       (int) STRING_LAST != (int) STRING_COPYPOSTFIELDS + 1)
-      curl_mfprintf(stderr,
-       "*** WARNING: curl_easy_setopt_ccsid() should be reworked ***\n");
-  }
 
   data = (struct Curl_easy *) curl;
   va_start(arg, tag);
@@ -1169,6 +1148,9 @@ curl_easy_setopt_ccsid(CURL *curl, CURLoption tag, ...)
   case CURLOPT_CUSTOMREQUEST:
   case CURLOPT_DEFAULT_PROTOCOL:
   case CURLOPT_DNS_SERVERS:
+  case CURLOPT_DNS_INTERFACE:
+  case CURLOPT_DNS_LOCAL_IP4:
+  case CURLOPT_DNS_LOCAL_IP6:
   case CURLOPT_DOH_URL:
   case CURLOPT_EGDSOCKET:
   case CURLOPT_ENCODING:
@@ -1213,6 +1195,7 @@ curl_easy_setopt_ccsid(CURL *curl, CURLoption tag, ...)
   case CURLOPT_RTSP_SESSION_ID:
   case CURLOPT_RTSP_STREAM_URI:
   case CURLOPT_RTSP_TRANSPORT:
+  case CURLOPT_SASL_AUTHZID:
   case CURLOPT_SERVICE_NAME:
   case CURLOPT_SOCKS5_GSSAPI_SERVICE:
   case CURLOPT_SSH_HOST_PUBLIC_KEY_MD5:
