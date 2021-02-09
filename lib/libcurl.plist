@@ -12,7 +12,7 @@
 	<string>curl</string>
 
 	<key>CFBundleIdentifier</key>
-	<string>se.haxx.curl.libcurl</string>
+	<string>se.curl.libcurl</string>
 
 	<key>CFBundleVersion</key>
 	<string>7.65.3</string>

@@ -6,11 +6,11 @@ rem *                             / __| | | | |_) | |
 rem *                            | (__| |_| |  _ <| |___
 rem *                             \___|\___/|_| \_\_____|
 rem *
-rem * Copyright (C) 2012 - 2019, Steve Holme, <steve_holme@hotmail.com>.
+rem * Copyright (C) 2012 - 2020, Steve Holme, <steve_holme@hotmail.com>.
 rem *
 rem * This software is licensed as described in the file COPYING, which
 rem * you should have received as part of this distribution. The terms
-rem * are also available at https://curl.haxx.se/docs/copyright.html.
+rem * are also available at https://curl.se/docs/copyright.html.
 rem *
 rem * You may opt to use, copy, modify, merge, publish, distribute and/or sell
 rem * copies of the Software, and permit persons to whom the Software is
@@ -94,6 +94,19 @@ rem ***************************************************************************
         set "VC_PATH=Microsoft Visual Studio\2017\Professional\VC"
       ) else (
         set "VC_PATH=Microsoft Visual Studio\2017\Community\VC"
+      )
+    ) else if /i "%~1" == "vc14.2" (
+      set VC_VER=14.2
+      set VC_DESC=VC14.2
+
+      rem Determine the VC14.2 path based on the installed edition in descending
+      rem order (Enterprise, then Professional and finally Community)
+      if exist "%PF%\Microsoft Visual Studio\2019\Enterprise\VC" (
+        set "VC_PATH=Microsoft Visual Studio\2019\Enterprise\VC"
+      ) else if exist "%PF%\Microsoft Visual Studio\2019\Professional\VC" (
+        set "VC_PATH=Microsoft Visual Studio\2019\Professional\VC"
+      ) else (
+        set "VC_PATH=Microsoft Visual Studio\2019\Community\VC"
       )
     ) else if /i "%~1%" == "x86" (
       set BUILD_PLATFORM=x86
@@ -202,6 +215,7 @@ rem ***************************************************************************
     if "%VC_VER%" == "12.0" set VCVARS_PLATFORM=amd64
     if "%VC_VER%" == "14.0" set VCVARS_PLATFORM=amd64
     if "%VC_VER%" == "14.1" set VCVARS_PLATFORM=amd64
+    if "%VC_VER%" == "14.2" set VCVARS_PLATFORM=amd64
   )
 
   if exist "%START_DIR%\ms\do_ms.bat" (
@@ -221,6 +235,8 @@ rem ***************************************************************************
   ) else if "%VC_VER%" == "7.1" (
     call "%ABS_VC_PATH%\bin\vcvars32"
   ) else if "%VC_VER%" == "14.1" (
+    call "%ABS_VC_PATH%\Auxiliary\Build\vcvarsall" %VCVARS_PLATFORM%
+  ) else if "%VC_VER%" == "14.2" (
     call "%ABS_VC_PATH%\Auxiliary\Build\vcvarsall" %VCVARS_PLATFORM%
   ) else (
     call "%ABS_VC_PATH%\vcvarsall" %VCVARS_PLATFORM%
@@ -569,7 +585,7 @@ rem
         if not exist "%OUTDIR%\DLL Release" (
           mkdir "%OUTDIR%\DLL Release" 1>nul
         )
-  
+
         move !build_dir!\lib\*.lib "%OUTDIR%\DLL Release" 1>nul
         move !build_dir!\bin\*.dll "%OUTDIR%\DLL Release" 1>nul
         move !build_dir!\bin\*.exe "%OUTDIR%\DLL Release" 1>nul
@@ -605,6 +621,7 @@ rem
   echo vc12      - Use Visual Studio 2013
   echo vc14      - Use Visual Studio 2015
   echo vc14.1    - Use Visual Studio 2017
+  echo vc14.2    - Use Visual Studio 2019
   echo.
   echo Platform:
   echo.
