@@ -182,6 +182,17 @@ static int sockopt_callback(void *clientp, curl_socket_t curlfd,
     }
   }
 #endif
+#ifdef SO_PRIORITY
+  if(config->vlan_priority > 0) {
+    int priority = (int)config->vlan_priority;
+    if(setsockopt(curlfd, SOL_SOCKET, SO_PRIORITY,
+      (const char *)&priority, sizeof(priority)) != 0) {
+      int error = errno;
+      warnf(config->global, "SO_PRIORITY %d failed with errno %d: %s;\n",
+            priority, error, strerror(error));
+    }
+  }
+#endif
   return CURL_SOCKOPT_OK;
 }
 
@@ -2240,7 +2251,7 @@ static CURLcode single_transfer(struct GlobalConfig *global,
 #endif
 
         /* new in 8.9.0 */
-        if(config->ip_tos > 0) {
+        if(config->ip_tos > 0 || config->vlan_priority > 0) {
           my_setopt(curl, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
           my_setopt(curl, CURLOPT_SOCKOPTDATA, config);
         }

@@ -10,6 +10,7 @@ Protocols: All
 Multi: single
 See-also:
   - tcp-nodelay
+  - vlan-priority
 Example:
   - --type-of-service CS5 $URL
 ---
