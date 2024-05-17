@@ -2256,6 +2256,8 @@ static CURLcode single_transfer(struct GlobalConfig *global,
           my_setopt(curl, CURLOPT_SOCKOPTDATA, config);
         }
 
+        my_setopt_str(curl, CURLOPT_INTERFACE_IP, config->iface_ip);
+
         /* initialize retry vars for loop below */
         per->retry_sleep_default = (config->retry_delay) ?
           config->retry_delay*1000L : RETRY_SLEEP_DEFAULT; /* ms */
