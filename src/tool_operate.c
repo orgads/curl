@@ -1737,6 +1737,8 @@ static CURLcode single_transfer(struct GlobalConfig *global,
             my_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
             my_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
           }
+          else if(config->ssl_no_verify_host)
+              my_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
           if(config->doh_insecure_ok) {
             my_setopt(curl, CURLOPT_DOH_SSL_VERIFYPEER, 0L);
